@@ -11,12 +11,26 @@ public class Concordance {
 
 	String inputFilePath;
 	TreeMap<String, FreqAndOccur> frequencyMap = new TreeMap<String, FreqAndOccur>();
+	boolean printSentenceNumbers = false;
 
 	public static void main(String[] args) {
 
-		Concordance concordance = new Concordance(
-				"/Users/aashishkarki/Desktop/metamorphosis.txt");
-		concordance.printConcordance();
+		if (args.length < 1) {
+			System.out.println("Usage: java Concordance <path> [L] \n");
+			System.out.println("<path> \t Path to the input text file");
+			System.out
+					.println("L \t Optional parameter that displays line numbers");
+		} else {
+			Concordance concordance = new Concordance(args[0]);
+			if (args.length > 1 && args[1].toLowerCase().equals("l")) {
+				concordance.printSentenceNumbers = true;
+			}
+			concordance.printConcordance();
+		}
+		// ~/Desktop/jam/Bridgewater/src/assignment/testFiles/HuckleberryFinn.txt
+		// Concordance concordance = new Concordance(args[0]);
+		// concordance.printConcordance();
+
 	}
 
 	public Concordance(String inputFilePath) {
@@ -26,7 +40,10 @@ public class Concordance {
 
 	private void printConcordance() {
 		for (String key : frequencyMap.keySet()) {
-			System.out.println(key + "\t" + frequencyMap.get(key).frequency);
+			System.out.println(key + "\t\t" + frequencyMap.get(key).frequency);
+			if (printSentenceNumbers) {
+				System.out.print("\t[");
+			}
 		}
 
 	}
@@ -37,10 +54,12 @@ public class Concordance {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(
 					inputFilePath));
 			String line = "";
+			int lineCount = 0;
 			LineParser lineParser = new LineParser();
 			while ((line = bufferedReader.readLine()) != null) {
+				lineCount++;
 				ArrayList<String> wordList = lineParser.parseLine(line);
-				processLine(wordList);
+				processLine(wordList, lineCount);
 			}
 
 			bufferedReader.close();
@@ -54,13 +73,13 @@ public class Concordance {
 
 	}
 
-	private void processLine(ArrayList<String> wordList) {
+	private void processLine(ArrayList<String> wordList, int lineCount) {
 		for (String s : wordList) {
 			if (frequencyMap.containsKey(s)) {
-				frequencyMap.get(s).addFreqAndOccur(111);
+				frequencyMap.get(s).addFreqAndOccur(lineCount);
 				;
 			} else {
-				frequencyMap.put(s, new FreqAndOccur(111));
+				frequencyMap.put(s, new FreqAndOccur(lineCount));
 			}
 		}
 	}

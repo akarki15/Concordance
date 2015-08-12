@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class FreqAndOccur {
 
 	public int frequency = 0;
-	public ArrayList<Integer> lineNumbers = new ArrayList<Integer>();
+	public ArrayList<Integer> sentenceNumbers = new ArrayList<Integer>();
 
 	public FreqAndOccur(int lineNumber) {
 		addFreqAndOccur(lineNumber);
@@ -13,6 +13,6 @@ public class FreqAndOccur {
 
 	public void addFreqAndOccur(int lineNumber) {
 		frequency++;
-		lineNumbers.add(lineNumber);
+		sentenceNumbers.add(lineNumber);
 	}
 }
