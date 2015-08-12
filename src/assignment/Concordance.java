@@ -27,9 +27,6 @@ public class Concordance {
 			}
 			concordance.printConcordance();
 		}
-		// ~/Desktop/jam/Bridgewater/src/assignment/testFiles/HuckleberryFinn.txt
-		// Concordance concordance = new Concordance(args[0]);
-		// concordance.printConcordance();
 
 	}
 
@@ -58,7 +55,7 @@ public class Concordance {
 			LineParser lineParser = new LineParser();
 			while ((line = bufferedReader.readLine()) != null) {
 				lineCount++;
-				ArrayList<String> wordList = lineParser.parseLine(line);
+				ArrayList<String> wordList = lineParser.parseLine(line, this);
 				processLine(wordList, lineCount);
 			}
 

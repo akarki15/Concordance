@@ -4,10 +4,15 @@ import java.util.ArrayList;
 
 public class LineParser {
 
-	public ArrayList<String> parseLine(String line) {
-		// Use space and various puncutation marks as delimiters
-		String[] splitWords = line
-				.split(" |,|\"|\\.|;|\\?|\\(|\\)|-|!|/|:|\\[|\\]");
+	public ArrayList<String> parseLine(String line, Concordance concordance) {
+		// Use space and punctuation marks ( ) , " . ? ! - : [ ] as delimiters
+		// for words
+		String punctuationRegex = "[ ,?!:\"\\]\\[\\(\\)]+";
+		String periodRegex = "[a-zA-Z\\]\\)\\}0-9]{3}.[a-zA-Z\\]\\)\\}0-9]{3}";
+
+		// String[] splitWords = line
+		// .split(" |,|\"|\\.|;|\\?|\\(|\\)|-|!|/|:|\\[|\\]");
+		String[] splitWords = line.split(punctuationRegex );
 		ArrayList<String> wordList = new ArrayList<String>();
 		for (String s : splitWords) {
 			String parsedS = parseWord(s);

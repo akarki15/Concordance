@@ -1,3 +1,4 @@
 Assumptions: 
 	1. A word does not span two lines i.e. There is no return character within a word. 
 	2. A word is only composed of letters and possibly an apostrophe
+	3. Sentences are separated by periods, exclamation mark, question mark, and semicolons. Period followed by "com", "edu" or "net" don't start new sentences.   
