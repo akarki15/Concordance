@@ -10,38 +10,63 @@ public class LineParser {
 	 */
 
 	public ArrayList<String> parseLine(String line, Concordance concordance) {
-		// Use space and punctuation marks ( ) , " . ? ! - : [ ] as delimiters
-		// for words
 
-		String periodRegex = "[^\\. ]{3}\\."; // ignore i.e., e.g.
-		String sentenceEndingPunctuations = "[?!;]" + "|" + periodRegex;
-		String otherPunctuations = "[ ,:\"\\]\\[\\(\\)]";
+		// Go through the input line and update the sentenceCount in concordance
+		for (int i = 0; i < line.length(); i++) {
+			char c = line.charAt(i);
+			// check if c is a sentence ending punctuation.
+			// special check for period to avoid counting periods in words
+			// like (i.e., e.g.)
+			if (";?!".indexOf(c) != -1) {				
+				concordance.sentenceCount++;
+			}
+			// no periods two spaces left from c
+			else if (i > 2 && c == '.' && line.charAt(i - 2) != '.') {
 
-		// Update number of sentences
-		concordance.sentenceCount = line.split(sentenceEndingPunctuations).length;
-		System.out.println(concordance.sentenceCount + "<<<<<<<<<<<<<<<<<<");
-		// Split the line into words
-		String[] splitWords = line.split(otherPunctuations + "|"
-				+ sentenceEndingPunctuations);
-		
-		for (char c: line.toCharArray()){
-			if (c=='?' || c=='!'|| c==';') || (c == '.')
+				if ((i + 2) < line.length()) {
+					// we are not dealing with words like i.e, e.g
+					if (line.charAt(i + 2) != '.') {					
+						concordance.sentenceCount++;
+					}
+				} else {					
+					concordance.sentenceCount++;
+				}
+			}
+
 		}
-		
-		
-		// Check each word before adding it to wordList
+
+		// Go through the input line and split it into words
 		ArrayList<String> wordList = new ArrayList<String>();
-		for (String s : splitWords) {
-			String parsedS = parseWord(s);
-			if (parsedS != null) {
-				wordList.add(parsedS);
+		String buffer = "";
+		for (int i = 0; i < line.length(); i++) {
+			char c = line.charAt(i);
+			// check if we encounter the end of a word
+
+			if ((" ,;?!:\"\\]\\[\\(\\)".indexOf(c) != -1)
+					|| (i > 2 && c == '.' && line.charAt(i - 2) != '.'
+							&& (i + 2) < line.length() && line.charAt(i + 2) != '.')) {
+				// check if the buffer is indeed a word
+				String checkedBufferWord = checkBufferWord(buffer);
+				if (checkedBufferWord != null) {
+					wordList.add(checkedBufferWord);
+				}
+				buffer = "";
+			} else {
+				buffer = buffer + c;
 			}
 		}
+		
+		// check the last buffer
+		String checkedBufferWord = checkBufferWord(buffer);
+		if (checkedBufferWord != null) {
+			wordList.add(checkedBufferWord);
+		}
+
 
 		return wordList;
 	}
 
-	private String parseWord(String word) {
+	private String checkBufferWord(String word) {
 		word = word.trim().toLowerCase(); // remove unwanted spaces and convert
 											// to lowercase
 

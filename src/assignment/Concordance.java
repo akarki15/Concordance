@@ -12,7 +12,7 @@ public class Concordance {
 	String inputFilePath;
 	TreeMap<String, FreqAndOccur> frequencyMap = new TreeMap<String, FreqAndOccur>();
 	boolean printSentenceNumbers = false;
-	int sentenceCount = 0;
+	int sentenceCount = 1;
 
 	public static void main(String[] args) {
 
