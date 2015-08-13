@@ -8,14 +8,15 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class Concordance {
-
+	// Class variables
 	String inputFilePath;
-	TreeMap<String, FreqAndOccur> frequencyMap = new TreeMap<String, FreqAndOccur>();
+	// Maps each word to a FreqAndOccur object
+	TreeMap<String, FreqAndOccur> frequencyMap = new TreeMap<String, FreqAndOccur>();	
 	boolean printSentenceNumbers = false;
 	int sentenceCount = 1;
 
 	public static void main(String[] args) {
-
+		// handle command line args
 		if (args.length < 1) {
 			System.out.println("Usage: java Concordance <path> [L] \n");
 			System.out.println("<path> \t Path to the input text file");
@@ -38,7 +39,8 @@ public class Concordance {
 
 	private void printConcordance() {
 		for (String key : frequencyMap.keySet()) {
-			System.out.print(key + "\t\t" + frequencyMap.get(key).frequency);
+			System.out
+					.printf("%-24s  %d", key, frequencyMap.get(key).frequency);
 			if (printSentenceNumbers) {
 				System.out.print(":"
 						+ frequencyMap.get(key).sentenceNumbers.toString());

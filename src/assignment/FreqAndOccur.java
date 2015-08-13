@@ -2,8 +2,9 @@ package assignment;
 
 import java.util.ArrayList;
 
+// Stores frequency and sentence numbers where a word occurs. 
 public class FreqAndOccur {
-
+	
 	public int frequency = 0;
 	public ArrayList<Integer> sentenceNumbers = new ArrayList<Integer>();
 

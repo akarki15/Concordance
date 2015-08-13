@@ -1,7 +1,6 @@
 package assignment;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class LineParser {
 	/*
@@ -17,7 +16,7 @@ public class LineParser {
 			// check if c is a sentence ending punctuation.
 			// special check for period to avoid counting periods in words
 			// like (i.e., e.g.)
-			if (";?!".indexOf(c) != -1) {				
+			if (";?!".indexOf(c) != -1) {
 				concordance.sentenceCount++;
 			}
 			// no periods two spaces left from c
@@ -25,10 +24,10 @@ public class LineParser {
 
 				if ((i + 2) < line.length()) {
 					// we are not dealing with words like i.e, e.g
-					if (line.charAt(i + 2) != '.') {					
+					if (line.charAt(i + 2) != '.') {
 						concordance.sentenceCount++;
 					}
-				} else {					
+				} else {
 					concordance.sentenceCount++;
 				}
 			}
@@ -55,13 +54,12 @@ public class LineParser {
 				buffer = buffer + c;
 			}
 		}
-		
+
 		// check the last buffer
 		String checkedBufferWord = checkBufferWord(buffer);
 		if (checkedBufferWord != null) {
 			wordList.add(checkedBufferWord);
 		}
-
 
 		return wordList;
 	}
