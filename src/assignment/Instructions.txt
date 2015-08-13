@@ -6,7 +6,7 @@ Running instructions:
 			Usage: java Concordance <path> [L] 
 			
 			<path> 	 Path to the input text file
-				L 	 Optional parameter that displays line numbers
+			L 	 Optional parameter that displays line numbers
 
 
 Assumptions made: 
