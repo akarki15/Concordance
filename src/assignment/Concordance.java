@@ -11,7 +11,7 @@ public class Concordance {
 	// Class variables
 	String inputFilePath;
 	// Maps each word to a FreqAndOccur object
-	TreeMap<String, FreqAndOccur> frequencyMap = new TreeMap<String, FreqAndOccur>();	
+	TreeMap<String, FreqAndOccur> frequencyMap = new TreeMap<String, FreqAndOccur>();
 	boolean printSentenceNumbers = false;
 	int sentenceCount = 1;
 
@@ -32,6 +32,7 @@ public class Concordance {
 
 	}
 
+	// Prints the concordance generated
 	public Concordance(String inputFilePath) {
 		this.inputFilePath = inputFilePath;
 		generateConcordance();
@@ -51,6 +52,8 @@ public class Concordance {
 
 	}
 
+	// reads each line and calls LineParser to get wordList as well as update
+	// sentenceCount
 	private void generateConcordance() {
 
 		try {
@@ -75,6 +78,7 @@ public class Concordance {
 
 	}
 
+	// Updates the frequency and sentence number of the parsed word.
 	private void processLine(ArrayList<String> wordList, int sentenceCount) {
 		for (String s : wordList) {
 			if (frequencyMap.containsKey(s)) {

@@ -1,5 +1,0 @@
-Assumptions: 
-	1. A word does not span two lines i.e. There is no return character within a word. 
-	2. A word is only composed of letters and possibly an apostrophe or a period. 
-	3. A period that marks end of a sentence has no other periods or spaces for four places before it. Regex matching sentence-ending periods is "[^\\. ]{3}\\."     	
-	4. Sentences are separated by periods, exclamation mark, question mark, and semicolons. Period followed by "com", "edu" or "net" don't start new sentences.   
