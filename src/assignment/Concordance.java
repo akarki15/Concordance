@@ -12,6 +12,7 @@ public class Concordance {
 	String inputFilePath;
 	TreeMap<String, FreqAndOccur> frequencyMap = new TreeMap<String, FreqAndOccur>();
 	boolean printSentenceNumbers = false;
+	int sentenceCount = 0;
 
 	public static void main(String[] args) {
 
@@ -37,10 +38,13 @@ public class Concordance {
 
 	private void printConcordance() {
 		for (String key : frequencyMap.keySet()) {
-			System.out.println(key + "\t\t" + frequencyMap.get(key).frequency);
+			System.out.print(key + "\t\t" + frequencyMap.get(key).frequency);
 			if (printSentenceNumbers) {
-				System.out.print("\t[");
+				System.out.print(":"
+						+ frequencyMap.get(key).sentenceNumbers.toString());
+
 			}
+			System.out.println();
 		}
 
 	}
@@ -51,12 +55,11 @@ public class Concordance {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(
 					inputFilePath));
 			String line = "";
-			int lineCount = 0;
+
 			LineParser lineParser = new LineParser();
 			while ((line = bufferedReader.readLine()) != null) {
-				lineCount++;
 				ArrayList<String> wordList = lineParser.parseLine(line, this);
-				processLine(wordList, lineCount);
+				processLine(wordList, sentenceCount);
 			}
 
 			bufferedReader.close();
@@ -70,13 +73,13 @@ public class Concordance {
 
 	}
 
-	private void processLine(ArrayList<String> wordList, int lineCount) {
+	private void processLine(ArrayList<String> wordList, int sentenceCount) {
 		for (String s : wordList) {
 			if (frequencyMap.containsKey(s)) {
-				frequencyMap.get(s).addFreqAndOccur(lineCount);
+				frequencyMap.get(s).addFreqAndOccur(sentenceCount);
 				;
 			} else {
-				frequencyMap.put(s, new FreqAndOccur(lineCount));
+				frequencyMap.put(s, new FreqAndOccur(sentenceCount));
 			}
 		}
 	}

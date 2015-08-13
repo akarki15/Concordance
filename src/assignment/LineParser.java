@@ -1,18 +1,35 @@
 package assignment;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class LineParser {
+	/*
+	 * Class for parsing words from line and updating sentenceCount in
+	 * Concordance class
+	 */
 
 	public ArrayList<String> parseLine(String line, Concordance concordance) {
 		// Use space and punctuation marks ( ) , " . ? ! - : [ ] as delimiters
 		// for words
-		String punctuationRegex = "[ ,?!:\"\\]\\[\\(\\)]+";
-		String periodRegex = "[a-zA-Z\\]\\)\\}0-9]{3}.[a-zA-Z\\]\\)\\}0-9]{3}";
 
-		// String[] splitWords = line
-		// .split(" |,|\"|\\.|;|\\?|\\(|\\)|-|!|/|:|\\[|\\]");
-		String[] splitWords = line.split(punctuationRegex );
+		String periodRegex = "[^\\. ]{3}\\."; // ignore i.e., e.g.
+		String sentenceEndingPunctuations = "[?!;]" + "|" + periodRegex;
+		String otherPunctuations = "[ ,:\"\\]\\[\\(\\)]";
+
+		// Update number of sentences
+		concordance.sentenceCount = line.split(sentenceEndingPunctuations).length;
+		System.out.println(concordance.sentenceCount + "<<<<<<<<<<<<<<<<<<");
+		// Split the line into words
+		String[] splitWords = line.split(otherPunctuations + "|"
+				+ sentenceEndingPunctuations);
+		
+		for (char c: line.toCharArray()){
+			if (c=='?' || c=='!'|| c==';') || (c == '.')
+		}
+		
+		
+		// Check each word before adding it to wordList
 		ArrayList<String> wordList = new ArrayList<String>();
 		for (String s : splitWords) {
 			String parsedS = parseWord(s);
@@ -20,6 +37,7 @@ public class LineParser {
 				wordList.add(parsedS);
 			}
 		}
+
 		return wordList;
 	}
 
@@ -35,17 +53,18 @@ public class LineParser {
 	}
 
 	// Returns true if the parameter word is composed of just letters and
-	// possibly apostrophe
+	// possibly apostrophe and period
 	private boolean isWord(String word) {
 		// ignore single apostrophe
 		if (word.equals("'"))
 			return false;
 
-		// check each char and determine whether the word is composed of letters
-		// and apostrophe
+		// check each char and determine whether the word is composed of
+		// letters, apostrophe or period
 		boolean isWord = true;
 		for (char s : word.toCharArray()) {
-			isWord = isWord && ((s >= 'a' && s <= 'z') || (s == '\''));
+			isWord = isWord
+					&& ((s >= 'a' && s <= 'z') || (s == '\'') || (s == '.'));
 		}
 
 		return isWord;
